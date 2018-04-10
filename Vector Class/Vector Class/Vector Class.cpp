@@ -17,17 +17,16 @@ public:
 	void pushBack(int element) {
 		if (elementCount == size)
 		{
-			int const s = this->getSize();
-			int newArray[s*s] = *array;
+			const int s = this->getSize();
+			int *newArray = (int*) malloc(sizeof(int*)*s);
+			for (int i = 0; i < s; i++)
+				newArray[i] = array[i];
 			newArray[size] = element;
-			*array = newArray;
-			++elementCount;
+			array = newArray;
 		}
 		if (elementCount < size)
-		{
 			array[elementCount] = element;
-			++elementCount;
-		}
+		++elementCount;
 		}
 
 private:
