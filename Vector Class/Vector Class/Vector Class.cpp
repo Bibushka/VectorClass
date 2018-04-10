@@ -15,6 +15,8 @@ public:
 	int getElementAtPosition(int position) { return *(array+position); }	
 	void addValueToPosition(int position, int value) { array[position] = value; }
 	void pushBack(int element) {
+		if (elementCount < size)
+			array[elementCount] = element;
 		if (elementCount == size)
 		{
 			const int s = this->getSize();
@@ -24,8 +26,6 @@ public:
 			newArray[size] = element;
 			array = newArray;
 		}
-		if (elementCount < size)
-			array[elementCount] = element;
 		++elementCount;
 		}
 
