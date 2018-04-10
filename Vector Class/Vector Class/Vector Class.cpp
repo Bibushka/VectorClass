@@ -20,10 +20,11 @@ public:
 		if (elementCount == size)
 		{
 			const int s = this->getSize();
-			int *newArray = (int*) malloc(sizeof(int*)*s);
+			int *newArray = (int*) malloc(sizeof(int*)*s*s);
+			size = sizeof(int*)*s*s;
 			for (int i = 0; i < s; i++)
 				newArray[i] = array[i];
-			newArray[size] = element;
+			newArray[elementCount] = element;
 			array = newArray;
 		}
 		++elementCount;
@@ -42,6 +43,7 @@ int main()
 	{
 		v.addValueToPosition(i, i);
 	}
+	v.pushBack(5);
 	for (int i = 0; i < v.getSize(); i++)
 		cout << v.getElementAtPosition(i) << endl;
 	getchar();
