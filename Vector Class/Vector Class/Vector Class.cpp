@@ -9,31 +9,52 @@ using namespace std;
 class Vector
 {
 public:
-	Vector(int s) : array{ new int[s] }, size{ s }, elementCount{ s } {}
+	Vector(int s) : array{ new int[s] }, size{ s }, elementCount{ getElements(0)} {}
 	~Vector() { delete[] array; }
 	int getSize() { return size; }
-	int getElementAtPosition(int position) { return *(array+position); }	
-	void addValueToPosition(int position, int value) { array[position] = value; }
-	void pushBack(int element) {
-		if (elementCount < size)
-			array[elementCount] = element;
-		if (elementCount == size)
-		{
-			const int s = this->getSize();
-			int *newArray = (int*) malloc(sizeof(int*)*s*s);
-			size = sizeof(int*)*s*s;
-			for (int i = 0; i < s; i++)
-				newArray[i] = array[i];
-			newArray[elementCount] = element;
-			array = newArray;
-		}
-		++elementCount;
-		}
+	int getElementAtPosition(int);
+	void addValueToPosition(int, int);
+	void pushBack(int);
+	int* checkCapacity(int);
+	int getElements(int);
 
 private:
 	int size, elementCount;
 	int* array;
 };
+
+int Vector::getElements(int v) {
+	while (array[v] != NULL)
+		v++;
+	return v;
+}
+int Vector::getElementAtPosition(int position) {
+	if (position<elementCount)
+		return array[position];
+	cout << "Position out of range";
+	return 0;
+}
+void Vector::addValueToPosition(int position, int value) {
+	if (position<elementCount)
+		array[position] = value;
+	else
+		cout << "Position out of range, value not added";
+}
+void Vector::pushBack(int element) {
+	if (elementCount < size)
+		array[elementCount] = element;
+	if (elementCount == size)
+		array = checkCapacity(element);
+	++elementCount;
+}
+int* Vector::checkCapacity(int element) {
+	int* newArray = new int[size*size];
+	size *= size;
+	for (int i = 0; i < size; i++)
+		newArray[i] = array[i];
+	newArray[elementCount] = element;
+	return newArray;
+}
 
 
 int main()
